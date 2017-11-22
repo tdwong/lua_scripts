@@ -4,6 +4,7 @@
 --	unix domain socket SERVER
 --
 --	v1	- receive only
+--	v2	- receive and send reply
 --
 
 require "socket"
@@ -23,7 +24,10 @@ while 1 do
 	res, err, elapsed = c:receive("*l")
 	if res then
 		print( res )
+		-- send reply
+		res, err, nsent = c:send( "reply\n" )
 	else
+		print( "failed to receive... punt..." )
 		break
 	end
 end
