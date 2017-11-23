@@ -5,6 +5,7 @@
 --
 --	v1	- send only
 --	v2	- send and receive reply
+--	v3	- interoperability tested (with socat & udmStrServ)
 --
 
 SOCKET=os.getenv("SOCKET") or "/tmp/uds_socket"
@@ -32,7 +33,10 @@ while 1 do
 		break
 	end
 	--
-	socket.sleep(2)
+	--socket.sleep(2)
+	io.write( "enter data to be sent: " )
+	outString = io.read()
+	if #outString==1 and outString=='.' then break end
 end
 
 c:close()

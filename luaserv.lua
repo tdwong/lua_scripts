@@ -5,6 +5,7 @@
 --
 --	v1	- receive only
 --	v2	- receive and send reply
+--	v3	- interoperability tested (with socat & udmStrClnt)
 --
 
 SOCKET=os.getenv("SOCKET") or "/tmp/uds_socket"
@@ -28,18 +29,18 @@ c=s:accept()
 
 	print( "client connected "..tostring(c) )
 
-	local replyStr = "reply"
-
 while 1 do
 	res, err, elapsed = c:receive("*l")
 	if res then
 		print( res )
 		-- send reply
 		-- NOTE: append a '\n' so that receiving end can do socket:receive("*l")
+		local replyStr = 'reply_'..res
 		res, err, nsent = c:send( replyStr..'\n' )
 		if res then print( "reply sent ..(" ..replyStr.. ")" ) end
 	else
-		print( "failed to receive... punt..." )
+		print( "err="..tostring(err)..", elapsed="..tostring(elapsed) )
+		print( "receive nothing... punt..." )
 		break
 	end
 end
