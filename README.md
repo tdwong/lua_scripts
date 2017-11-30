@@ -1,5 +1,5 @@
-# Lua unix domain socket sample
+# sample Lua scripts
 
-- client and server Lua scripts
-- domain=AF_UNIX, type=STREAM
+- lua_unix_domain_socket : unix domain socket
+- lua_nixio_file_lock : file locking using nixio
 
